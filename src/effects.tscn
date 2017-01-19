@@ -24,4 +24,11 @@ invert/enable = false
 invert/border = 100.0
 script/script = ExtResource( 1 )
 
+[node name="tween" type="Tween" parent="fade"]
+
+playback/process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
 

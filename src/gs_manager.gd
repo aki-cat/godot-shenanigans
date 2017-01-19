@@ -1,7 +1,7 @@
 
 extends Node
 
-export (String, "splash", "menu", "gameplay") var current_gamestate
+export (String, "splash", "start", "gameplay") var current_gamestate
 
 func _ready():
   if current_gamestate:

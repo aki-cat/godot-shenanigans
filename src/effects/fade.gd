@@ -1,17 +1,16 @@
 
 extends Polygon2D
 
-signal fade_out()
-signal fade_mid()
-signal fade_in()
+signal done_fade_out()
+signal done_fade_in()
 
 onready var w = get_viewport().get_rect().size.width
 onready var h = get_viewport().get_rect().size.height
-onready var tween = Tween.new()
+onready var tween = get_node("tween")
 
 func _ready():
-  add_child(tween)
   reset_color()
+  change_alpha(1)
   set_polygon([
     Vector2(0, 0),
     Vector2(w, 0),
@@ -22,18 +21,18 @@ func _ready():
 func fade_out(time):
   tween.interpolate_method(self, "change_alpha", 0, 1, time, Tween.TRANS_LINEAR, Tween.EASE_IN)
   tween.start()
-  emit_signal("fade_out")
+  yield(tween, "tween_complete")
+  emit_signal("done_fade_out")
 
 func fade_in(time):
   tween.interpolate_method(self, "change_alpha", 1, 0, time, Tween.TRANS_LINEAR, Tween.EASE_IN)
   tween.start()
-  emit_signal("fade_mid")
   yield(tween, "tween_complete")
-  emit_signal("fade_in")
+  emit_signal("done_fade_in")
 
 func start(total_time):
   fade_out(total_time / 2)
-  yield(tween, "tween_complete")
+  yield(self, "done_fade_out")
   fade_in(total_time / 2)
 
 func reset_color():
