@@ -35,5 +35,5 @@ func play():
     fade.fade_out(wait_time)
     yield(fade, "done_fade_out")
     img.hide()
-  change_gamestate("menu")
-  fade.fade_in(1.0)
+  change_gamestate("start")
+  fade.fade_in(wait_time)
